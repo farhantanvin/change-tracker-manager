@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="@Url.Content("~/Images/logo.jpg")" rel="icon">
+
+    <title>@ViewBag.Title</title>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/angular")
+    @Styles.Render("~/Content/css")
+
+
+</head>
+
+<body id="page-top" ng-app="GHIApp">
+    <div id="wrapper">
+
+        @Html.Partial("Nav")
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+
+                @Html.Partial("Header")
+
+                <!-- Container Fluid Start -->
+                <div class="container-fluid" id="container-wrapper">
+
+                    @RenderBody()
+                    @Html.Partial("Logout")
+
+
+
+                    <!--dynamic success message-->
+                    <button data-toggle="modal" id="btnMessage" data-target="#messageModal" style="display: none;"></button>
+                    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body" style="border: 10px solid #6ca9de">
+                                    <p class="text-center" id="messageDisplay">Are you sure you want to logout?</p>
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!---Container Fluid End -->
+
+            </div>
+
+            @Html.Partial("Footer")
+
+        </div>
+    </div>
+
+    @Html.Partial("Top")
+
+
+    <script>
+        function messageLoad(x) {
+            var showMsg = '<h4 class="text-center custom-bold"><i class="fa fa-check-circle-o"></i>' + " " + x + '</h4>';
+            $('#messageDisplay').html(showMsg);
+            $('#btnMessage').trigger("click");
+        }
+
+        $(document).ready(function () {
+            var path = location.pathname;
+            if (path != '/') {
+                $('.sidebar a[href^="' + path + '"]').addClass('active');
+            }
+            $(".custom-menu a.active").trigger("click");
+            var div = $('.custom-menu a.active').parent().parent().attr('id');
+            $("#" + div).addClass("show");
+
+        });
+        $('.custom-menu li a').click(function () {
+            $('.custom-menu').find('li.active').removeClass('active');
+            $(this).parents("li").addClass('active');
+        });
+
+    </script>
+
+    @Scripts.Render("~/bundles/scripts")
+</body>
+
+</html>

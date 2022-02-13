@@ -1,0 +1,125 @@
+﻿<div class="row" ng-controller="RiskAssessmentController" ng-cloak>
+    <div class="col-lg-12">
+
+        <div class="card mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Risk Assessment Pending List</h6>
+            </div>
+            <div class="table-responsive p-3">
+                <table class="table align-items-center table-flush" id="dataTable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Serial No</th>
+                            <th>Request Date</th>
+                            <th>Request By</th>
+                            <th>Description</th>
+                            <th>Change Type</th>
+                            <th>Change Priority</th>
+                            <th>Change Impact</th>
+                            <th>Detail Rollback Plan</th>
+                            <th>Recommended By</th>
+                            <th>Recommended Date</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="r in result" ng-class="{'selectedRow':$index == selectedRow}">
+                            <td>{{r.SerialNo}}</td>
+                            <td>{{r.RequestDate | date:'dd/MM/yyyy'}}</td>
+                            <td>{{r.RequestBy}}</td>
+                            <td>{{r.Description}}</td>
+                            <td>{{r.ChangeTypeName}}</td>
+                            <td>{{r.ChangePriority}}</td>
+                            <td>{{r.ChangeImpact}}</td>
+                            <td>{{r.RollBackPlan}}</td>
+                            <td>{{r.RecommendedBy}}</td>
+                            <td>{{r.RecommendedDate | date:'dd/MM/yyyy'}}</td>
+                            <td class="text-center">
+                                <button type="submit" class="btn btn-success" ng-click="RiskAssessmentForm(r, $index)" data-toggle="modal" data-target="#assesmentModal"><i class="fa fa-list"></i> Risk Assessment</button>
+                            </td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!-- Modal Risk Assessment -->
+
+    <div class="modal fade bd-example-modal-lg" id="assesmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 1000px;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Risk Assessment Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                        <div class="col-md-6">
+                            <input type="text" ng-model="masterData.AssessmentBy" class="form-control" placeholder="Enter Risk Assesment By" disabled>
+                            <input type="hidden" id="sessionValue" value="@Session["fullName"]">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="date" ng-model="masterData.AssessmentDate"  class="form-control" placeholder="Enter Risk Assesment Date">
+                        </div>
+                    </div>
+                    <div class="table-responsive p-3">
+                        <table class="table align-items-center table-flush table-striped">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>SL</th>
+                                    <th>List of Related Service</th>
+                                    <th>Vulnerability</th>
+                                    <th>Threat</th>
+                                    <th>Action Plan</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="rowData in RiskRowData | orderBy:'Id':true">
+                                    <td>
+                                        {{$index+1}}
+                                    </td>
+                                    <td>
+                                        <textarea class="form-control" ng-model="rowData.Service"></textarea>
+                                    </td>
+                                    <td>
+                                        <textarea class="form-control" ng-model="rowData.Vulnerability"></textarea>
+                                    </td>
+                                    <td>
+                                        <textarea class="form-control" ng-model="rowData.Threat"></textarea>
+                                    </td>
+                                    <td>
+                                        <textarea class="form-control" ng-model="rowData.Plan"></textarea>
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="submit" class="btn btn-danger" ng-click="DeleteRow($index)"><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                    <button type="button" class="btn btn-outline-success" ng-click="AddRow()"><i class="fa fa-plus"></i> Add New Row</button>
+                    <button type="button" class="btn btn-outline-primary" ng-click="SubmitRiskAssessment(RiskRowData, masterData)"><i class="fa fa-save"></i> Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+@Scripts.Render("~/Angular/ChangeManagement/RiskAssessmentController.js")

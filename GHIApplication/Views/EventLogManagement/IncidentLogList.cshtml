@@ -1,0 +1,153 @@
+﻿<div class="row" ng-controller="IncidentLogListController" ng-cloak>
+
+
+    <!-- DataTable with Hover -->
+    <div class="col-lg-12">
+        <div class="card mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Event Log List</h6>
+            </div>
+            <div class="table-responsive p-3">
+                <table class="table align-items-center table-flush" id="dataTable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>SL</th>
+                            <th>Incident No</th>
+                            <th>Incident Date</th>
+                            <th>Event No</th>
+                            <th>Event Date</th>
+                            <th>Event Time</th>
+                            <th>Event Name / Type</th>
+                            <th>Event Details</th>
+                            <th>Cause</th>
+                            <th>Discover By</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="r in result" ng-class="{'selectedRow':$index == selectedRow}">
+                            <td>{{$index+1}}</td>
+                            <td>{{r.IncidentSerialNo}}</td>
+                            <td>{{r.IncidentForwardDate | date:'dd/MM/yyyy'}}</td>
+                            <td>{{r.SerialNo}}</td>
+                            <td>{{r.EventDate | date:'dd/MM/yyyy'}}</td>
+                            <td>{{r.EventTime}}</td>
+                            <td>{{r.EventTypeName}}</td>
+                            <td>{{r.EventDetails}}</td>
+                            <td>{{r.EventCause}}</td>
+                            <td>{{r.DiscoverBy}}</td>
+                            <td>
+                                <button type="button" class="btn btn-warning" ng-click="InvestigationFn(r, $index)" data-toggle="modal" data-target="#investigationModal"><i class="fa fa-edit"></i> Investigation</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal Investigation Form -->
+    <div class="modal fade bd-example-modal-lg" id="investigationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 1000px;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        Incident Investigation Form
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                        <div class="col-md-6">
+                            <label class="col-form-label">Incident Investigation Date <span style="color: red">*</span></label>
+                            <input type="date" ng-model="newData.InvestigationDate" class="form-control" placeholder="dd/MM/yyyy">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="col-form-label">Incident Location <span style="color: red">*</span></label>
+                            <input type="text" ng-model="newData.Location" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                        <div class="col-md-12">
+                            <label class="col-form-label">Incident Investigation Team <span style="color: red">*</span></label>
+                            <textarea ng-model="newData.InvestigationTeam" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="col-form-label">What Happened?/Decscription of Incident <span style="color: red">*</span></label>
+                            <textarea ng-model="newData.WhatHappened" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                        <div class="col-md-12">
+                            <label class="col-form-label">What task was being performed at the time of the incident?</label>
+                            <textarea ng-model="newData.WhatTask" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="col-form-label">What factors contributed to the incident</label>
+                            <div class="checkbox">
+                                <label><input name="whatFactor" type="checkbox" value="1"> Wrong equipment for the job</label>
+                                <label><input name="whatFactor" type="checkbox" value="2"> Equipment failure</label>
+                                <label><input name="whatFactor" type="checkbox" value="3"> Inadequate maintance</label>
+                                <label><input name="whatFactor" type="checkbox" value="4"> Material / equipment too heavy / awkward</label>
+                                <label><input name="whatFactor" type="checkbox" value="5"> Inadequate guarding</label>
+                                <label><input name="whatFactor" type="checkbox" value="6"> Inadequate training provided</label>
+                                <input type="text" class="form-control" ng-model="newData.OtherFactor" placeholder="If other write here ..." style="width: 50%; display: inline-block;">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                        <div class="col-md-12">
+                            <label class="col-form-label">Comments for Incident Investigation Team</label>
+                            <textarea ng-model="newData.Comments" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                        <div class="col-md-12">
+                            <label class="col-form-label">Discover By <span style="color: red">*</span></label>
+                            <select ng-model="newData.DiscoverBy" ng-options="r.CardNo as r.CardNo for r in CardNoData" class="form-control mb-3">
+                                <option value="">Select Discover By</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="col-form-label">Types of incident</label>
+                            <div class="checkbox">
+                                <label><input name="incidentType" type="checkbox" value="1"> Disaster</label>
+                                <label><input name="incidentType" type="checkbox" value="2"> Disruption of IT</label>
+                                <label><input name="incidentType" type="checkbox" value="3"> Explosion</label>
+                                <label><input name="incidentType" type="checkbox" value="4"> Information Leakage</label>
+                                <label><input name="incidentType" type="checkbox" value="5"> Riot</label>
+                                <label><input name="incidentType" type="checkbox" value="6"> Theft</label>
+                                <label><input name="incidentType" type="checkbox" value="7"> Loss of Equipment</label>
+                                <label><input name="incidentType" type="checkbox" value="8"> Unauthorized Access</label>
+                                <label><input name="incidentType" type="checkbox" value="9"> Virus</label>
+                                <label><input name="incidentType" type="checkbox" value="10"> Worm</label>
+                                <label><input name="incidentType" type="checkbox" value="11"> Malicious Attack</label>
+                                <label><input name="incidentType" type="checkbox" value="12"> Other</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger closeModal" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                    <button type="button" class="btn btn-outline-primary saveBtn" ng-disabled="!newData.InvestigationDate || !newData.Location || !newData.InvestigationTeam || !newData.WhatHappened" ng-click="SaveInvestigation(newData)"><i class="fa fa-save"></i> Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+@Scripts.Render("~/Angular/EventLog/IncidentLogListController.js")

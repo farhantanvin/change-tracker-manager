@@ -1,0 +1,96 @@
+﻿<div class="row" ng-controller="AssignAuthorityController" ng-cloak>
+    <div class="col-lg-12">
+
+        <!-- Change Authority Form -->
+        <div class="card mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Assign Authority Entry Form</h6>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Card No <span style="color: red">*</span></label>
+                        <div class="col-sm-6">
+                            <select ng-model="newData.EmployeeId" ng-options="r.Id as r.CardNo for r in CardNoData" ng-change="ChangeEmployeeName(newData)" class="form-control mb-3"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Authority Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="newData.AuthorityName" class="form-control" placeholder="Enter Authority Name" disabled>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Change Type  <span style="color: red">*</span></label>
+                        <div class="col-sm-6">
+                            <select ng-model="newData.ChangeType" ng-options="r.Id as r.ChangeTypeName for r in ChangeTypeData" class="form-control mb-3"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Description</label>
+                        <div class="col-sm-6">
+                            <textarea class="form-control" ng-model="newData.Description" placeholder="Enter Description" spellcheck="true"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-8 offset-sm-3">
+                            <button class="btn btn-primary" id="btnSubmit" ng-disabled="!newData.EmployeeId || !newData.ChangeType" ng-click="SubmitFn(newData)"><i class="fa fa-save"></i> Save</button>
+                            <button class="btn btn-danger" ng-click="ClearFn()"><i class="fa fa-clone"></i> Clear</button>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- DataTable with Hover -->
+    <div class="col-lg-12">
+        <div class="card mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Assign Authority List</h6>
+            </div>
+            <div class="table-responsive p-3">
+                <table class="table align-items-center table-flush" id="dataTable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Card No</th>
+                            <th>Authority Name</th>
+                            <th>Change Type</th>
+                            <th>Description</th>
+                            <th class="text-center" style="width: 400px !important;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="r in result" ng-class="{'selectedRow':$index == selectedRow}">
+                            <td>
+                                {{ (CardNoData | filter:{Id:r.EmployeeId})[0].CardNo}}
+                            </td>
+                            <td>
+                                {{ (CardNoData | filter:{Id:r.EmployeeId})[0].EmployeeName}}
+                            </td>
+                            <td>
+                                {{ (ChangeTypeData | filter:{Id:r.ChangeType})[0].ChangeTypeName}}
+                            </td>
+                            <td>{{r.Description}}</td>
+                            <td class="text-center" style="width: 400px !important;">
+                                <button type="button" class="btn btn-success" ng-click="EditFn(r, $index)"><i class="fa fa-edit"></i> Edit</button>
+                                <button type="button" class="btn btn-danger" ng-click="DeleteFn(r.Id, $index)"><i class="fa fa-trash"></i> Delete</button>
+                                <button type="button" class="btn btn-warning" ng-if="r.Active==1" ng-click="StatusFn(r.Id, $index)"><i class="fa fa-times"></i> Inactive</button>
+                                <button type="button" class="btn btn-dark" ng-if="r.Active==0" ng-click="StatusFn(r.Id, $index)"><i class="fa fa-check"></i> Active</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/Angular/ChangeManagement/AssignAuthorityController.js")

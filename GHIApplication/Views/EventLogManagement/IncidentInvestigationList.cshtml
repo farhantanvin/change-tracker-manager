@@ -1,0 +1,535 @@
+﻿<div class="row" ng-controller="IncidentInvestigationListController" ng-cloak>
+
+
+    <!-- DataTable with Hover -->
+    <div class="col-lg-12">
+        <div class="card mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="background-color:aliceblue">
+                <h6 class="m-0 font-weight-bold text-primary">Incident Investigation List</h6>
+            </div>
+            <div class="table-responsive p-3">
+                <table class="table align-items-center table-flush" id="dataTable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>SL</th>
+                            <th>Incident No</th>
+                            <th>Incident Date</th>
+                            <th>Event No</th>
+                            <th>Event Date</th>
+                            <th>Event Time</th>
+                            <th>Event Name / Type</th>
+                            <th>Event Details</th>
+                            <th>Cause</th>
+                            <th>Discover By</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="r in result" ng-class="{'selectedRow':$index == selectedRow}">
+                            <td>{{$index+1}}</td>
+                            <td>{{r.IncidentSerialNo}}</td>
+                            <td>{{r.IncidentForwardDate | date:'dd/MM/yyyy'}}</td>
+                            <td>{{r.SerialNo}}</td>
+                            <td>{{r.EventDate | date:'dd/MM/yyyy'}}</td>
+                            <td>{{r.EventTime}}</td>
+                            <td>{{r.EventTypeName}}</td>
+                            <td>{{r.EventDetails}}</td>
+                            <td>{{r.EventCause}}</td>
+                            <td>{{r.DiscoverBy}}</td>
+                            <td class="text-center" style="width: 400px !important;">
+                                <button type="button" class="btn btn-dark" ng-click="ViewReportFn(r, $index)" data-toggle="modal" data-target="#investigationReportModal"><i class="fas fa-plus-circle"></i>Report</button>
+                                <button type="button" class="btn btn-primary" ng-click="ViewFn(r, $index)" data-toggle="modal" data-target="#viewModal"><i class="fa fa-eye"></i>View</button>
+                                <button type="button" class="btn btn-success" ng-click="EditFn(r, $index)" data-toggle="modal" data-target="#editModal"><i class="fa fa-edit"></i>Edit</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <!-- Modal View Form -->
+        <div class="modal fade bd-example-modal-lg" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content" style="width: 1000px;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                            Incident Investigation View Form
+                        </h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                            <div class="col-md-6">
+                                <label class="col-form-label">Incident Investigation Date</label>
+                                : {{newData.InvestigationDate | date:'dd/MM/yyyy'}}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="col-form-label">Incident Location</label>
+                                : {{newData.Location}}
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                            <div class="col-md-12">
+                                <label class="col-form-label">Investigation Team </label>
+                                : {{newData.InvestigationTeam}}
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="col-form-label">What Happened?</label>
+                                : {{newData.WhatHappened}}
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                            <div class="col-md-12">
+                                <label class="col-form-label">What task was being performed at the time of the incident</label>
+                                : {{newData.WhatTask}}
+
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="col-form-label">What factors contributed to the incident</label>
+                                :
+                                <span ng-if="newData.WhatFactor.split(',')[0] == 1" class="bg-danger text-white" style="padding: 2px;">Wrong equipment for the job</span>
+                                <span ng-if="newData.WhatFactor.split(',')[1] == 2" class="bg-dark text-white" style="padding: 2px;">Equipment failure</span>
+                                <span ng-if="newData.WhatFactor.split(',')[2] == 3" class="bg-success text-white" style="padding: 2px;">Inadequate maintance</span>
+                                <span ng-if="newData.WhatFactor.split(',')[3] == 4" class="bg-warning text-white" style="padding: 2px;">Material / equipment too heavy / awkward</span>
+                                <span ng-if="newData.WhatFactor.split(',')[4] == 5" class="bg-primary text-white" style="padding: 2px;">Inadequate guarding</span>
+                                <span ng-if="newData.WhatFactor.split(',')[5] == 6" class="bg-gradient-dark text-white" style="padding: 2px;">Inadequate training provided</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                            <div class="col-md-12">
+                                <label class="col-form-label">Factors if other</label>
+                                : {{newData.OtherFactor}}
+
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="col-form-label">Comments</label>
+                                : {{newData.Comments}}
+
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="col-form-label">Discovered By</label>
+                                : {{newData.DiscoverBy}}
+
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="col-form-label">Types of Incident</label>
+                                :
+                                <span ng-if="newData.incidentType.split(',')[0] == 1" class="bg-danger text-white" style="padding: 2px;"> Disaster</span>
+                                <span ng-if="newData.incidentType.split(',')[1] == 2" class="bg-dark text-white" style="padding: 2px;"> Disruption of IT Service</span>
+                                <span ng-if="newData.incidentType.split(',')[2] == 3" class="bg-success text-white" style="padding: 2px;"> Explosion</span>
+                                <span ng-if="newData.incidentType.split(',')[3] == 4" class="bg-warning text-white" style="padding: 2px;"> Information Leakage</span>
+                                <span ng-if="newData.incidentType.split(',')[4] == 5" class="bg-primary text-white" style="padding: 2px;"> Riot</span>
+                                <span ng-if="newData.incidentType.split(',')[5] == 6" class="bg-gradient-dark text-white" style="padding: 2px;"> Theft</span>
+                                <span ng-if="newData.incidentType.split(',')[6] == 7" class="bg-info text-white" style="padding: 2px;"> Loss of Equipment</span>
+                                <span ng-if="newData.incidentType.split(',')[7] == 8" class="bg-info text-white" style="padding: 2px;"> Unauthorized Access</span>
+                                <span ng-if="newData.incidentType.split(',')[8] == 9" class="bg-info text-white" style="padding: 2px;"> Virus</span>
+                                <span ng-if="newData.incidentType.split(',')[9] == 10" class="bg-info text-white" style="padding: 2px;"> Worm</span>
+                                <span ng-if="newData.incidentType.split(',')[10] == 11" class="bg-info text-white" style="padding: 2px;"> Malicious Attack</span>
+                                <span ng-if="newData.incidentType.split(',')[11] == 12" class="bg-info text-white" style="padding: 2px;"> Other</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger closeModal" data-dismiss="modal" style="display:block;margin: 0 auto !important;"><i class="fa fa-times"></i> Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal Investigation Edit Form -->
+        <div class="modal fade bd-example-modal-lg" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content" style="width: 1000px;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                            Incident Investigation Edit Form
+                        </h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                            <div class="col-md-6">
+                                <label class="col-form-label">Incident Investigation Date <span style="color: red">*</span></label>
+                                <input type="date" ng-model="editData.InvestigationDate" class="form-control" placeholder="dd/MM/yyyy">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="col-form-label">Incident Location <span style="color: red">*</span></label>
+                                <input type="text" ng-model="editData.Location" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                            <div class="col-md-12">
+                                <label class="col-form-label">Incident Investigation Team <span style="color: red">*</span></label>
+                                <textarea ng-model="editData.InvestigationTeam" class="form-control"></textarea>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="col-form-label">What Happened?  <span style="color: red">*</span></label>
+                                <textarea ng-model="editData.WhatHappened" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                            <div class="col-md-12">
+                                <label class="col-form-label">What task was being performed at the time of the incident?</label>
+                                <textarea ng-model="editData.WhatTask" class="form-control"></textarea>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="col-form-label">What factors contributed to the incident</label>
+                                <div class="checkbox">
+                                    <label><input name="whatFactor" ng-checked="editData.WhatFactor.split(',')[0] == 1" type="checkbox" value="1"> Wrong equipment for the job</label>
+                                    <label><input name="whatFactor" ng-checked="editData.WhatFactor.split(',')[1] == 2" type="checkbox" value="2"> Equipment failure</label>
+                                    <label><input name="whatFactor" ng-checked="editData.WhatFactor.split(',')[2] == 3" type="checkbox" value="3"> Inadequate maintance</label>
+                                    <label><input name="whatFactor" ng-checked="editData.WhatFactor.split(',')[3] == 4" type="checkbox" value="4"> Material / equipment too heavy / awkward</label>
+                                    <label><input name="whatFactor" ng-checked="editData.WhatFactor.split(',')[4] == 5" type="checkbox" value="5"> Inadequate guarding</label>
+                                    <label><input name="whatFactor" ng-checked="editData.WhatFactor.split(',')[5] == 6" type="checkbox" value="6"> Inadequate training provided</label>
+                                    <input type="text" class="form-control" ng-model="editData.OtherFactor" placeholder="If other write here ..." style="width: 50%; display: inline-block;">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                            <div class="col-md-12">
+                                <label class="col-form-label">Comments for Incident Investigation Team</label>
+                                <textarea ng-model="editData.Comments" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                            <div class="col-md-12">
+                                <label class="col-form-label">Discover By <span style="color: red">*</span></label>
+                                <select ng-model="editData.DiscoverBy" ng-options="r.CardNo as r.CardNo for r in CardNoData" class="form-control mb-3">
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="col-form-label">Types of incident</label>
+                                <div class="checkbox">
+                                    <label><input name="incidentType" ng-checked="editData.incidentType.split(',')[0] == 1" type="checkbox" value="1"> Disaster</label>
+                                    <label><input name="incidentType" ng-checked="editData.incidentType.split(',')[1] == 2" type="checkbox" value="2"> Disruption of IT</label>
+                                    <label><input name="incidentType" ng-checked="editData.incidentType.split(',')[2] == 3" type="checkbox" value="3"> Explosion</label>
+                                    <label><input name="incidentType" ng-checked="editData.incidentType.split(',')[3] == 4" type="checkbox" value="4"> Information Leakage</label>
+                                    <label><input name="incidentType" ng-checked="editData.incidentType.split(',')[4] == 5" type="checkbox" value="5"> Riot</label>
+                                    <label><input name="incidentType" ng-checked="editData.incidentType.split(',')[5] == 6" type="checkbox" value="6"> Theft</label>
+                                    <label><input name="incidentType" ng-checked="editData.incidentType.split(',')[6] == 7" type="checkbox" value="7"> Loss of Equipment</label>
+                                    <label><input name="incidentType" ng-checked="editData.incidentType.split(',')[7] == 8" type="checkbox" value="8"> Unauthorized Access</label>
+                                    <label><input name="incidentType" ng-checked="editData.incidentType.split(',')[8] == 9" type="checkbox" value="9"> Virus</label>
+                                    <label><input name="incidentType" ng-checked="editData.incidentType.split(',')[9] == 10" type="checkbox" value="10"> Worm</label>
+                                    <label><input name="incidentType" ng-checked="editData.incidentType.split(',')[10]== 11" type="checkbox" value="11"> Malicious Attack</label>
+                                    <label><input name="incidentType" ng-checked="editData.incidentType.split(',')[11]== 12" type="checkbox" value="12"> Other</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-danger closeModal" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                            <button type="button" class="btn btn-outline-success updateBtn" ng-disabled="!editData.InvestigationDate || !editData.Location || !editData.InvestigationTeam || !editData.WhatHappened" ng-click="UpdateInvestigation(editData)"><i class="fa fa-edit"></i> Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Modal Investigation Report Form -->
+        <div class="modal fade bd-example-modal-lg" id="investigationReportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content" style="width: 1000px;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                            Incident Reporting Form
+                        </h5>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="bs-example">
+                            <div class="accordion" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-header" id="headingOne">
+                                        <h2 class="mb-0">
+                                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne"><i class="fa fa-plus"></i> Details of the Incident</button>
+                                        </h2>
+                                    </div>
+
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="row" style="margin-left: 2px;margin-right: 2px;padding-bottom:15px">
+
+                                                <input type="hidden" ng-model="newReportDataFromDB.IncidentId" class="form-control"/>
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">Types of Incident</label>
+                                                    <input type="text" readonly ng-model="newReportDataFromDB.incidentType" class="form-control" />
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">Date of Incident</label>
+                                                    <input type="date" ng-model="newReportData.IncidentDate" class="form-control">
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">Place of Incident</label>
+                                                    <input type="text" readonly ng-model="newReportDataFromDB.Location" class="form-control"/>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">Description of Incident</label>
+                                                    <textarea readonly ng-model="newReportDataFromDB.WhatHappened" class="form-control"></textarea>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header" id="headingTwo">
+                                        <h2 class="mb-0">
+                                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"><i class="fa fa-plus"></i> Impact of the Incident</button>
+                                        </h2>
+                                    </div>
+
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="row" style="margin-left: 2px;margin-right: 2px;padding-bottom:15px">
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">In terms of Business <span style="color: red">*</span></label>
+                                                    <textarea ng-model="newReportData.ImpactBusiness" class="form-control"></textarea>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">In terms of Cost<span style="color: red">*</span></label>
+                                                    <textarea ng-model="newReportData.ImpactCost" class="form-control"></textarea>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">Who discover the incident</label>
+                                                    <input type="text" readonly ng-model="newReportDataFromDB.DiscoverBy" class="form-control">
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">Discover Date</label>
+                                                    <input type="date" ng-model="newReportData.DiscoverDate" class="form-control">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header" id="headingThree">
+                                        <h2 class="mb-0">
+                                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"><i class="fa fa-plus"></i> Root Cause</button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="row" style="margin-left: 2px;margin-right: 2px;padding-bottom:15px">
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">Details Root Cause of Incident </label>
+                                                    <textarea ng-model="newReportData.RootCauseIndcident" class="form-control"></textarea>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">Incident Recovery Cost(if any)</label>
+                                                    <input type="number" ng-model="newReportData.RecoveryCost" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header" id="headingFour">
+                                        <h2 class="mb-0">
+                                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour"><i class="fa fa-plus"></i> Corrective Action</button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="row" style="margin-left: 2px;margin-right: 2px;padding-bottom:15px">
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">Details Corrective Action of Incident </label>
+                                                    <textarea ng-model="newReportData.DetailsCorrectiveAction" class="form-control"></textarea>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">Corrective Action Taken by</label>
+                                                    <input type="text" ng-model="newReportData.CorrectiveActionTakenBy" class="form-control">
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">Corrective Action Taken Date</label>
+                                                    <input type="date" ng-model="newReportData.CorrectiveActionTakenByDate" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="card">
+                                    <div class="card-header" id="headingFive">
+                                        <h2 class="mb-0">
+                                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive"><i class="fa fa-plus"></i> Preventive Action</button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="row" style="margin-left: 2px;margin-right: 2px;padding-bottom:15px">
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">Details Preventive Action </label>
+                                                    <textarea ng-model="newReportData.DetailsPreventiveAction" class="form-control"></textarea>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">Preventive Action taken</label>
+                                                    <input type="text" ng-model="newReportData.PreventiveActionTakenBy" class="form-control">
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <label class="col-form-label">Preventive Action Taken Date </label>
+                                                    <input type="date" ng-model="newReportData.PreventiveActionByDate" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="card">
+                                    <div class="card-header" id="headingSix">
+                                        <h2 class="mb-0">
+                                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix"><i class="fa fa-plus"></i> Learning from this Incident</button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="row" style="margin-left: 2px;margin-right: 2px;padding-bottom:15px">
+                                                <div class="col-md-12">
+                                                    <label class="col-form-label">Learning from this incident</label>
+                                                    <textarea ng-model="newReportData.LearningFromIncident" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header" id="headingSeven">
+                                        <h2 class="mb-0">
+                                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven"><i class="fa fa-plus"></i> Next Follow Up Schedule</button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="row" style="margin-left: 2px;margin-right: 2px;padding-bottom:15px">
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">Follow Up Date</label>
+                                                    <input type="date" ng-model="newReportData.FollowUpDate" class="form-control">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">Concern Person for Next Follow Up</label>
+                                                    <input type="text" ng-model="newReportData.FollowUpConcernPerson" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header" id="headingEight">
+                                        <h2 class="mb-0">
+                                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEight"><i class="fa fa-plus"></i>ISMR Comments/Advice</button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="row" style="margin-left: 2px;margin-right: 2px;padding-bottom:15px">
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label"> ISMR Comments/Advice</label>
+                                                    <textarea ng-model="newReportData.IsmrComments" class="form-control"></textarea>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">ISMR Name</label>
+                                                    <input type="text" ng-model="newReportData.IsmrName" class="form-control">
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">ISMR Date</label>
+                                                    <input type="date" ng-model="newReportData.IsmrDate" class="form-control">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" ng-click="SaveReportFn(newReportData, newReportDataFromDB)" id="btnSubmit"><i class="fa fa-save"></i> Save</button>
+                        <button class="btn btn-danger" ng-click="ClearReportFn()"><i class="fa fa-clone"></i> Clear</button>
+                        <button type="button" class="btn btn-info closeModal" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+  </div>
+
+    <script>
+    $(document).ready(function () {
+        // Add minus icon for collapse element which is open by default
+        $(".collapse.show").each(function () {
+            $(this).prev(".card-header").find(".fa").addClass("fa-minus").removeClass("fa-plus");
+        });
+
+        // Toggle plus minus icon on show hide of collapse element
+        $(".collapse").on('show.bs.collapse', function () {
+            $(this).prev(".card-header").find(".fa").removeClass("fa-plus").addClass("fa-minus");
+        }).on('hide.bs.collapse', function () {
+            $(this).prev(".card-header").find(".fa").removeClass("fa-minus").addClass("fa-plus");
+        });
+    });
+    </script>
+
+
+    <style>
+        .card-header {
+            background-color: #69a0b3
+        }
+
+        .bs-example {
+            margin: 20px;
+        }
+
+    </style>
+
+ @Scripts.Render("~/Angular/EventLog/IncidentInvestigationListController.js")
+

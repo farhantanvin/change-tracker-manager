@@ -1,0 +1,63 @@
+﻿<div class="row" ng-controller="EventTypeController" ng-cloak>
+    <div class="col-lg-12">
+
+        <!-- Event Type Form -->
+        <div class="card mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Event Type Entry Form</h6>
+            </div>
+            <div class="card-body">
+                <form>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Event Type Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="newData.EventTypeName" class="form-control" placeholder="Enter Event Type Name">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-8 offset-sm-3">
+                            <button class="btn btn-primary" id="btnSubmit" ng-disabled="!newData.EventTypeName" ng-click="SubmitFn(newData)"><i class="fa fa-save"></i> Save</button>
+                            <button class="btn btn-danger" ng-click="ClearFn()"><i class="fa fa-clone"></i> Clear</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- DataTable with Hover -->
+    <div class="col-lg-12">
+        <div class="card mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Event Type Name List</h6>
+            </div>
+            <div class="table-responsive p-3">
+                <table class="table align-items-center table-flush" id="dataTable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Event Type Name</th>
+                            <th class="text-center" style="width: 400px !important;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="r in result" ng-class="{'selectedRow':$index == selectedRow}">
+                            <td>{{r.EventTypeName}}</td>
+                            <td class="text-center" style="width: 400px !important;">
+                                <button type="button" class="btn btn-success" ng-click="EditFn(r, $index)"><i class="fa fa-edit"></i> Edit</button>
+                                <button type="button" class="btn btn-danger" ng-click="DeleteFn(r.Id, $index)"><i class="fa fa-trash"></i> Delete</button>
+                                <button type="button" class="btn btn-warning" ng-if="r.Active==1" ng-click="StatusFn(r.Id, $index)"><i class="fa fa-times"></i> Inactive</button>
+                                <button type="button" class="btn btn-dark" ng-if="r.Active==0" ng-click="StatusFn(r.Id, $index)"><i class="fa fa-check"></i> Active</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/Angular/EventLog/EventTypeController.js")

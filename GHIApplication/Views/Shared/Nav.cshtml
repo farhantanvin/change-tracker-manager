@@ -1,0 +1,111 @@
+﻿@{
+    var admin = System.Web.HttpContext.Current.Session["admin"];
+    int riskAuth = Convert.ToInt32(System.Web.HttpContext.Current.Session["riskAuth"]);
+    int assignAuth = Convert.ToInt32(System.Web.HttpContext.Current.Session["assignAuth"]);
+    int verificationAuth = Convert.ToInt32(System.Web.HttpContext.Current.Session["verificationAuth"]);
+}
+
+<!-- Sidebar Start -->
+<div class="custom-menu">
+    <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon">
+                <img src="@Url.Content("~/Images/logo.jpg")" class="img-thumbnail">
+            </div>
+            <div class="sidebar-brand-text mx-3">GHITL</div>
+        </a>
+        <li class="nav-item active">
+            <a class="nav-link" href="@Url.Action("Dashboard", "Dashboard")">
+                <i class="fas fa-fw fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menu1" aria-expanded="true" aria-controls="collapseBootstrap">
+                <i class="fab fa-fw fa-wpforms"></i>
+                <span>Change Management</span>
+            </a>
+            <div id="menu1" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="@Url.Action("ChangeRequest", "ChangeManagement")">Change Request Entry</a>
+                    <a class="collapse-item" href="@Url.Action("ChangePendingList", "ChangeManagement")">Change Request List</a>
+
+                    @if (riskAuth != 0)
+                    {
+                        <a class="collapse-item" href="@Url.Action("RiskAssessmentList", "ChangeManagement")">Risk Assessment List</a>
+                    }
+
+
+
+                    @if (assignAuth != 0)
+                    {
+                        <a class="collapse-item" href="@Url.Action("ChangeAssignList", "ChangeManagement")">Change Assign List</a>
+                    }
+
+                    <a class="collapse-item" href="@Url.Action("ChangeByList", "ChangeManagement")">Change By List</a>
+
+                    @if (verificationAuth != 0)
+                    {
+                        <a class="collapse-item" href="@Url.Action("VerificationByList", "ChangeManagement")">Verification By List</a>
+                    }
+
+                </div>
+            </div>
+        </li>
+        @if (admin.Equals(1))
+        {
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menu101" aria-expanded="true" aria-controls="collapseBootstrap">
+                    <i class="fab fa-fw fa-wolf-pack-battalion"></i>
+                    <span>Event Log Management</span>
+                </a>
+                <div id="menu101" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="@Url.Action("EventLog", "EventLogManagement")">Event Log Entry</a>
+                        <a class="collapse-item" href="@Url.Action("AllEventLogList", "EventLogManagement")">Event Log List</a>
+                        <a class="collapse-item" href="@Url.Action("IncidentLogList", "EventLogManagement")">Incident Log List</a>
+                        <a class="collapse-item" href="@Url.Action("IncidentInvestigationList", "EventLogManagement")">Incident Investigation List</a>
+                        <a class="collapse-item" href="@Url.Action("IncidentInvestigationReportList", "EventLogManagement")">Incident Investigation Report</a>
+                    </div>
+                </div>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menu2" aria-expanded="true" aria-controls="collapseBootstrap">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <div id="menu2" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="@Url.Action("ChangeType", "ChangeManagement")">Change Type List</a>
+                        <a class="collapse-item" href="@Url.Action("RiskAuthority", "ChangeManagement")">Risk Assessment Authority</a>
+                        <a class="collapse-item" href="@Url.Action("AssignAuthority", "ChangeManagement")">Work Assign Authority</a>
+                        <a class="collapse-item" href="@Url.Action("VerificationAuthority", "ChangeManagement")">Verification Authority</a>
+                        <a class="collapse-item" href="@Url.Action("EventType", "EventLogManagement")">Event Type</a>
+                    </div>
+                </div>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menu3" aria-expanded="true" aria-controls="collapseBootstrap">
+                    <i class="fas fa-fw fa-columns"></i>
+                    <span>Report</span>
+                </a>
+                <div id="menu3" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="@Url.Action("ChangeReport", "ChangeManagement")">Change Report</a>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+<!-- Sidebar End -->
+
+<style>
+    .sidebar a {
+        font-size: 12px !important;
+    }
+</style>

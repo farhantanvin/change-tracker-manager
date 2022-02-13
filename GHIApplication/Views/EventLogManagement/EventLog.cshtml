@@ -1,0 +1,75 @@
+﻿<div class="row" ng-controller="EventLogController" ng-cloak>
+    <div class="col-lg-12">
+
+        <!-- Event Log Entry Form -->
+        <div class="card mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Event Log Entry Form</h6>
+            </div>
+            <div class="card-body">
+                <div>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Event Date <span style="color: red">*</span></label>
+                        <div class="col-sm-6">
+                            <input type="date" ng-model="newData.EventDate" class="form-control" placeholder="Enter Event Date">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Event Time <span style="color: red">*</span></label>
+                        <div class="col-sm-6">
+                            <input type="time" ng-model="newData.EventTime" class="form-control">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Event Name or Type  <span style="color: red">*</span></label>
+                        <div class="col-sm-6">
+                            <select ng-model="newData.EventType" ng-options="r.Id as r.EventTypeName for r in EventTypeData" class="form-control mb-3">
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Event Details</label>
+                        <div class="col-sm-6">
+                            <textarea ng-model="newData.EventDetails" class="form-control" placeholder="Enter Event Details"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Event Cause</label>
+                        <div class="col-sm-6">
+                            <textarea ng-model="newData.EventCause" class="form-control" placeholder="Enter Event Cause"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Discover By <span style="color: red">*</span></label>
+                        <div class="col-sm-6">
+                            <select ng-model="newData.DiscoverBy" ng-options="r.CardNo as r.CardNo for r in CardNoData" class="form-control mb-3">
+                                <option value="">Select Discover By</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-8 offset-sm-3">
+                            <button class="btn btn-primary" id="btnSubmit" ng-disabled="!newData.EventDate || !newData.EventTime || !newData.EventType || !newData.DiscoverBy" ng-click="SaveFn(newData)"><i class="fa fa-save"></i> Save</button>
+                            <button class="btn btn-danger" ng-click="ClearFn()"><i class="fa fa-clone"></i> Clear</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@Scripts.Render("~/Angular/EventLog/EventLogController.js")

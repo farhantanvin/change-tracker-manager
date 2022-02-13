@@ -1,0 +1,154 @@
+﻿<div class="col-lg-12" ng-controller="IncidentInvestigationReportController" ng-cloak>
+
+    <!-- DataTable with Hover -->
+    <div class="col-lg-12">
+        <div class="card mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="background-color:aliceblue">
+                <h6 class="m-0 font-weight-bold text-primary">Incident Investigation Report List</h6>
+            </div>
+            <div class="table-responsive p-3">
+                <table class="table align-items-center table-flush" id="dataTable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>SL</th>
+                            <th>Incident No</th>
+                            <th>Incident Date</th>
+                            <th>Place of Incident</th>
+                            <th>Discover By</th>
+                            <th>Next Follow Up Date</th>
+                            <th>Concern Person</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="r in result" ng-class="{'selectedRow':$index == selectedRow}">
+                            <td>{{$index+1}}</td>
+                            <td>{{r.IncidentId}}</td>
+                            <td>{{r.IncidentDate | date:'dd/MM/yyyy'}}</td>
+                            <td>{{r.PlaceOfIncident}}</td>
+                            <td>{{r.DiscoverPerson}}</td>
+                            <td>{{r.FollowUpDate | date:'dd/MM/yyyy'}}</td>
+                            <td>{{r.FollowUpConcernPerson}}</td>
+                            <td class="text-center" style="width: 400px !important;">
+                              
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal View Form -->
+    <div class="modal fade bd-example-modal-lg" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 1000px;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        Incident Investigation View Form
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                        <div class="col-md-6">
+                            <label class="col-form-label">Incident Investigation Date</label>
+                            : {{newData.InvestigationDate | date:'dd/MM/yyyy'}}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="col-form-label">Incident Location</label>
+                            : {{newData.Location}}
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                        <div class="col-md-12">
+                            <label class="col-form-label">Investigation Team </label>
+                            : {{newData.InvestigationTeam}}
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="col-form-label">What Happened?</label>
+                            : {{newData.WhatHappened}}
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                        <div class="col-md-12">
+                            <label class="col-form-label">What task was being performed at the time of the incident</label>
+                            : {{newData.WhatTask}}
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="col-form-label">What factors contributed to the incident</label>
+                            :
+                            <span ng-if="newData.WhatFactor.split(',')[0] == 1" class="bg-danger text-white" style="padding: 2px;">Wrong equipment for the job</span>
+                            <span ng-if="newData.WhatFactor.split(',')[1] == 2" class="bg-dark text-white" style="padding: 2px;">Equipment failure</span>
+                            <span ng-if="newData.WhatFactor.split(',')[2] == 3" class="bg-success text-white" style="padding: 2px;">Inadequate maintance</span>
+                            <span ng-if="newData.WhatFactor.split(',')[3] == 4" class="bg-warning text-white" style="padding: 2px;">Material / equipment too heavy / awkward</span>
+                            <span ng-if="newData.WhatFactor.split(',')[4] == 5" class="bg-primary text-white" style="padding: 2px;">Inadequate guarding</span>
+                            <span ng-if="newData.WhatFactor.split(',')[5] == 6" class="bg-gradient-dark text-white" style="padding: 2px;">Inadequate training provided</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                        <div class="col-md-12">
+                            <label class="col-form-label">Factors if other</label>
+                            : {{newData.OtherFactor}}
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="col-form-label">Comments</label>
+                            : {{newData.Comments}}
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="col-form-label">Discovered By</label>
+                            : {{newData.DiscoverBy}}
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="col-form-label">Types of Incident</label>
+                            :
+                            <span ng-if="newData.incidentType.split(',')[0] == 1" class="bg-danger text-white" style="padding: 2px;"> Disaster</span>
+                            <span ng-if="newData.incidentType.split(',')[1] == 2" class="bg-dark text-white" style="padding: 2px;"> Disruption of IT Service</span>
+                            <span ng-if="newData.incidentType.split(',')[2] == 3" class="bg-success text-white" style="padding: 2px;"> Explosion</span>
+                            <span ng-if="newData.incidentType.split(',')[3] == 4" class="bg-warning text-white" style="padding: 2px;"> Information Leakage</span>
+                            <span ng-if="newData.incidentType.split(',')[4] == 5" class="bg-primary text-white" style="padding: 2px;"> Riot</span>
+                            <span ng-if="newData.incidentType.split(',')[5] == 6" class="bg-gradient-dark text-white" style="padding: 2px;"> Theft</span>
+                            <span ng-if="newData.incidentType.split(',')[6] == 7" class="bg-info text-white" style="padding: 2px;"> Loss of Equipment</span>
+                            <span ng-if="newData.incidentType.split(',')[7] == 8" class="bg-info text-white" style="padding: 2px;"> Unauthorized Access</span>
+                            <span ng-if="newData.incidentType.split(',')[8] == 9" class="bg-info text-white" style="padding: 2px;"> Virus</span>
+                            <span ng-if="newData.incidentType.split(',')[9] == 10" class="bg-info text-white" style="padding: 2px;"> Worm</span>
+                            <span ng-if="newData.incidentType.split(',')[10] == 11" class="bg-info text-white" style="padding: 2px;"> Malicious Attack</span>
+                            <span ng-if="newData.incidentType.split(',')[11] == 12" class="bg-info text-white" style="padding: 2px;"> Other</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger closeModal" data-dismiss="modal" style="display:block;margin: 0 auto !important;"><i class="fa fa-times"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+        
+
+@Scripts.Render("~/Angular/EventLog/IncidentInvestigationReportController.js")

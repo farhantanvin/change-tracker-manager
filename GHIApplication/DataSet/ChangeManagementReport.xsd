@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Report" targetNamespace="http://tempuri.org/Report.xsd" xmlns:mstns="http://tempuri.org/Report.xsd" xmlns="http://tempuri.org/Report.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Report" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="Report" msprop:Generator_UserDSName="Report">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ReportMaster" msprop:Generator_TableClassName="ReportMasterDataTable" msprop:Generator_TableVarName="tableReportMaster" msprop:Generator_RowChangedName="ReportMasterRowChanged" msprop:Generator_TablePropName="ReportMaster" msprop:Generator_RowDeletingName="ReportMasterRowDeleting" msprop:Generator_RowChangingName="ReportMasterRowChanging" msprop:Generator_RowEvHandlerName="ReportMasterRowChangeEventHandler" msprop:Generator_RowDeletedName="ReportMasterRowDeleted" msprop:Generator_RowClassName="ReportMasterRow" msprop:Generator_UserTableName="ReportMaster" msprop:Generator_RowEvArgName="ReportMasterRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RequestDate" msprop:Generator_ColumnVarNameInTable="columnRequestDate" msprop:Generator_ColumnPropNameInRow="RequestDate" msprop:Generator_ColumnPropNameInTable="RequestDateColumn" msprop:Generator_UserColumnName="RequestDate" type="xs:string" minOccurs="0" />
+              <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
+              <xs:element name="ChangeTypeName" msprop:Generator_ColumnVarNameInTable="columnChangeTypeName" msprop:Generator_ColumnPropNameInRow="ChangeTypeName" msprop:Generator_ColumnPropNameInTable="ChangeTypeNameColumn" msprop:Generator_UserColumnName="ChangeTypeName" type="xs:string" minOccurs="0" />
+              <xs:element name="ChangeOther" msprop:Generator_ColumnVarNameInTable="columnChangeOther" msprop:Generator_ColumnPropNameInRow="ChangeOther" msprop:Generator_ColumnPropNameInTable="ChangeOtherColumn" msprop:Generator_UserColumnName="ChangeOther" type="xs:string" minOccurs="0" />
+              <xs:element name="ChangePriority" msprop:Generator_ColumnVarNameInTable="columnChangePriority" msprop:Generator_ColumnPropNameInRow="ChangePriority" msprop:Generator_ColumnPropNameInTable="ChangePriorityColumn" msprop:Generator_UserColumnName="ChangePriority" type="xs:string" minOccurs="0" />
+              <xs:element name="ChangeImpact" msprop:Generator_ColumnVarNameInTable="columnChangeImpact" msprop:Generator_ColumnPropNameInRow="ChangeImpact" msprop:Generator_ColumnPropNameInTable="ChangeImpactColumn" msprop:Generator_UserColumnName="ChangeImpact" type="xs:string" minOccurs="0" />
+              <xs:element name="RollBackPlan" msprop:Generator_ColumnVarNameInTable="columnRollBackPlan" msprop:Generator_ColumnPropNameInRow="RollBackPlan" msprop:Generator_ColumnPropNameInTable="RollBackPlanColumn" msprop:Generator_UserColumnName="RollBackPlan" type="xs:string" minOccurs="0" />
+              <xs:element name="RecommendedBy" msprop:Generator_ColumnVarNameInTable="columnRecommendedBy" msprop:Generator_ColumnPropNameInRow="RecommendedBy" msprop:Generator_ColumnPropNameInTable="RecommendedByColumn" msprop:Generator_UserColumnName="RecommendedBy" type="xs:string" minOccurs="0" />
+              <xs:element name="RiskAssessmentBy" msprop:Generator_ColumnVarNameInTable="columnRiskAssessmentBy" msprop:Generator_ColumnPropNameInRow="RiskAssessmentBy" msprop:Generator_ColumnPropNameInTable="RiskAssessmentByColumn" msprop:Generator_UserColumnName="RiskAssessmentBy" type="xs:string" minOccurs="0" />
+              <xs:element name="RiskAssessmentDate" msprop:Generator_ColumnVarNameInTable="columnRiskAssessmentDate" msprop:Generator_ColumnPropNameInRow="RiskAssessmentDate" msprop:Generator_ColumnPropNameInTable="RiskAssessmentDateColumn" msprop:Generator_UserColumnName="RiskAssessmentDate" type="xs:string" minOccurs="0" />
+              <xs:element name="ApprovedBy" msprop:Generator_ColumnVarNameInTable="columnApprovedBy" msprop:Generator_ColumnPropNameInRow="ApprovedBy" msprop:Generator_ColumnPropNameInTable="ApprovedByColumn" msprop:Generator_UserColumnName="ApprovedBy" type="xs:string" minOccurs="0" />
+              <xs:element name="ApprovedDate" msprop:Generator_ColumnVarNameInTable="columnApprovedDate" msprop:Generator_ColumnPropNameInRow="ApprovedDate" msprop:Generator_ColumnPropNameInTable="ApprovedDateColumn" msprop:Generator_UserColumnName="ApprovedDate" type="xs:string" minOccurs="0" />
+              <xs:element name="ApprovedComments" msprop:Generator_ColumnVarNameInTable="columnApprovedComments" msprop:Generator_ColumnPropNameInRow="ApprovedComments" msprop:Generator_ColumnPropNameInTable="ApprovedCommentsColumn" msprop:Generator_UserColumnName="ApprovedComments" type="xs:string" minOccurs="0" />
+              <xs:element name="ChangedBy" msprop:Generator_ColumnVarNameInTable="columnChangedBy" msprop:Generator_ColumnPropNameInRow="ChangedBy" msprop:Generator_ColumnPropNameInTable="ChangedByColumn" msprop:Generator_UserColumnName="ChangedBy" type="xs:string" minOccurs="0" />
+              <xs:element name="ChangedDate" msprop:Generator_ColumnVarNameInTable="columnChangedDate" msprop:Generator_ColumnPropNameInRow="ChangedDate" msprop:Generator_ColumnPropNameInTable="ChangedDateColumn" msprop:Generator_UserColumnName="ChangedDate" type="xs:string" minOccurs="0" />
+              <xs:element name="ChangedCompleteDate" msprop:Generator_ColumnVarNameInTable="columnChangedCompleteDate" msprop:Generator_ColumnPropNameInRow="ChangedCompleteDate" msprop:Generator_ColumnPropNameInTable="ChangedCompleteDateColumn" msprop:Generator_UserColumnName="ChangedCompleteDate" type="xs:string" minOccurs="0" />
+              <xs:element name="VerificationBy" msprop:Generator_ColumnVarNameInTable="columnVerificationBy" msprop:Generator_ColumnPropNameInRow="VerificationBy" msprop:Generator_ColumnPropNameInTable="VerificationByColumn" msprop:Generator_UserColumnName="VerificationBy" type="xs:string" minOccurs="0" />
+              <xs:element name="VerificationDate" msprop:Generator_ColumnVarNameInTable="columnVerificationDate" msprop:Generator_ColumnPropNameInRow="VerificationDate" msprop:Generator_ColumnPropNameInTable="VerificationDateColumn" msprop:Generator_UserColumnName="VerificationDate" type="xs:string" minOccurs="0" />
+              <xs:element name="VerificationComments" msprop:Generator_ColumnVarNameInTable="columnVerificationComments" msprop:Generator_ColumnPropNameInRow="VerificationComments" msprop:Generator_ColumnPropNameInTable="VerificationCommentsColumn" msprop:Generator_UserColumnName="VerificationComments" type="xs:string" minOccurs="0" />
+              <xs:element name="RequestByCardNo" msprop:Generator_ColumnVarNameInTable="columnRequestByCardNo" msprop:Generator_ColumnPropNameInRow="RequestByCardNo" msprop:Generator_ColumnPropNameInTable="RequestByCardNoColumn" msprop:Generator_UserColumnName="RequestByCardNo" type="xs:string" minOccurs="0" />
+              <xs:element name="RequestByName" msprop:Generator_ColumnVarNameInTable="columnRequestByName" msprop:Generator_ColumnPropNameInRow="RequestByName" msprop:Generator_ColumnPropNameInTable="RequestByNameColumn" msprop:Generator_UserColumnName="RequestByName" type="xs:string" minOccurs="0" />
+              <xs:element name="RecommendedDate" msprop:Generator_ColumnVarNameInTable="columnRecommendedDate" msprop:Generator_ColumnPropNameInRow="RecommendedDate" msprop:Generator_ColumnPropNameInTable="RecommendedDateColumn" msprop:Generator_UserColumnName="RecommendedDate" type="xs:string" minOccurs="0" />
+              <xs:element name="SerialNo" msprop:Generator_ColumnVarNameInTable="columnSerialNo" msprop:Generator_ColumnPropNameInRow="SerialNo" msprop:Generator_ColumnPropNameInTable="SerialNoColumn" msprop:Generator_UserColumnName="SerialNo" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ReportDetail" msprop:Generator_TableClassName="ReportDetailDataTable" msprop:Generator_TableVarName="tableReportDetail" msprop:Generator_RowChangedName="ReportDetailRowChanged" msprop:Generator_TablePropName="ReportDetail" msprop:Generator_RowDeletingName="ReportDetailRowDeleting" msprop:Generator_RowChangingName="ReportDetailRowChanging" msprop:Generator_RowEvHandlerName="ReportDetailRowChangeEventHandler" msprop:Generator_RowDeletedName="ReportDetailRowDeleted" msprop:Generator_RowClassName="ReportDetailRow" msprop:Generator_UserTableName="ReportDetail" msprop:Generator_RowEvArgName="ReportDetailRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Service" msprop:Generator_ColumnVarNameInTable="columnService" msprop:Generator_ColumnPropNameInRow="Service" msprop:Generator_ColumnPropNameInTable="ServiceColumn" msprop:Generator_UserColumnName="Service" type="xs:string" minOccurs="0" />
+              <xs:element name="Vulnerability" msprop:Generator_ColumnVarNameInTable="columnVulnerability" msprop:Generator_ColumnPropNameInRow="Vulnerability" msprop:Generator_ColumnPropNameInTable="VulnerabilityColumn" msprop:Generator_UserColumnName="Vulnerability" type="xs:string" minOccurs="0" />
+              <xs:element name="Threat" msprop:Generator_ColumnVarNameInTable="columnThreat" msprop:Generator_ColumnPropNameInRow="Threat" msprop:Generator_ColumnPropNameInTable="ThreatColumn" msprop:Generator_UserColumnName="Threat" type="xs:string" minOccurs="0" />
+              <xs:element name="Plan" msprop:Generator_ColumnVarNameInTable="columnPlan" msprop:Generator_ColumnPropNameInRow="Plan" msprop:Generator_ColumnPropNameInTable="PlanColumn" msprop:Generator_UserColumnName="Plan" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
